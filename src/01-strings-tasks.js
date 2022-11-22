@@ -80,8 +80,8 @@ function extractNameFromTemplate(value) {
  *   'John Doe'  => 'J'
  *   'cat'       => 'c'
  */
-function getFirstChar(/* value */) {
-  throw new Error('Not implemented');
+function getFirstChar(value) {
+  return value.substring(0, 1);
 }
 
 /**
@@ -95,8 +95,8 @@ function getFirstChar(/* value */) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.trim();
 }
 
 /**
@@ -110,8 +110,12 @@ function removeLeadingAndTrailingWhitespaces(/* value */) {
  *   'A', 5  => 'AAAAA'
  *   'cat', 3 => 'catcatcat'
  */
-function repeatString(/* value, count */) {
-  throw new Error('Not implemented');
+function repeatString(value, count) {
+  let str = '';
+  for (let i = 0; i < count; i += 1) {
+    str += value;
+  }
+  return str;
 }
 
 /**
@@ -126,8 +130,8 @@ function repeatString(/* value, count */) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.replace(value, '');
 }
 
 /**
@@ -141,8 +145,10 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  let res = str.replace('<', '');
+  res = res.replace('>', '');
+  return res;
 }
 
 
@@ -156,8 +162,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -175,8 +181,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -202,8 +208,32 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let str = '';
+  for (let h = 0; h < height; h += 1) {
+    for (let i = 0; i < width; i += 1) {
+      if (h === 0 && i === 0) {
+        str += '┌';
+      } else if (h === 0 && i === width - 1) {
+        str += '┐\n';
+      } else if (h === 0) {
+        str += '─';
+      } else if (h === height - 1 && i === 0) {
+        str += '└';
+      } else if (h === height - 1 && i === width - 1) {
+        str += '┘\n';
+      } else if (h === height - 1) {
+        str += '─';
+      } else if (i === 0) {
+        str += '│';
+      } else if (i === width - 1) {
+        str += '│\n';
+      } else {
+        str += ' ';
+      }
+    }
+  }
+  return str;
 }
 
 
@@ -223,8 +253,24 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let res = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (str.charAt(i) === ' ') {
+      if (str.charCodeAt(i) < 90 && str.charCodeAt(i) > 64 && ((str.charCodeAt(i)) + 13) <= 90) {
+        res += String.fromCharCode(str.charCodeAt(i) + 13);
+      } else if (str.charCodeAt(i) < 96 && str.charCodeAt(i) > 64
+      && ((str.charCodeAt(i)) + 13) > 90) {
+        res += String.fromCharCode(((str.charCodeAt(i) + 13) - 90) + 64);
+      } else if (str.charCodeAt(i) > 95 && ((str.charCodeAt(i)) + 13) <= 122) {
+        res += String.fromCharCode(str.charCodeAt(i) + 13);
+      } else if (str.charCodeAt(i) > 95 && ((str.charCodeAt(i)) + 13) > 122) {
+        res += String.fromCharCode(((str.charCodeAt(i) + 13) - 122) + 96);
+      }
+    }
+  }
+
+  return res;
 }
 
 /**
