@@ -254,23 +254,7 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-  let res = '';
-  for (let i = 0; i < str.length; i += 1) {
-    if (str.charAt(i) === ' ') {
-      if (str.charCodeAt(i) < 90 && str.charCodeAt(i) > 64 && ((str.charCodeAt(i)) + 13) <= 90) {
-        res += String.fromCharCode(str.charCodeAt(i) + 13);
-      } else if (str.charCodeAt(i) < 96 && str.charCodeAt(i) > 64
-      && ((str.charCodeAt(i)) + 13) > 90) {
-        res += String.fromCharCode(((str.charCodeAt(i) + 13) - 90) + 64);
-      } else if (str.charCodeAt(i) > 95 && ((str.charCodeAt(i)) + 13) <= 122) {
-        res += String.fromCharCode(str.charCodeAt(i) + 13);
-      } else if (str.charCodeAt(i) > 95 && ((str.charCodeAt(i)) + 13) > 122) {
-        res += String.fromCharCode(((str.charCodeAt(i) + 13) - 122) + 96);
-      }
-    }
-  }
-
-  return res;
+  return str.replace(/[a-z]/gi, (letter) => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
 }
 
 /**
@@ -286,8 +270,8 @@ function encodeToRot13(str) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  return typeof value === 'string';
 }
 
 
